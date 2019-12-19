@@ -25,7 +25,7 @@ const (
 	CategoryFailure = "Failure"
 )
 
-var webhookCategories = []string{CategorySuccess, CategoryFailure}
+var webhookCategories = []string{CategorySuccess, CategorySkipped, CategoryFailure}
 var webhookStatusCategories = map[flows.CallStatus]string{
 	flows.CallStatusSuccess:         CategorySuccess,
 	flows.CallStatusResponseError:   CategoryFailure,

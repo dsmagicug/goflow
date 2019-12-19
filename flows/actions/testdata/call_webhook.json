@@ -103,14 +103,24 @@
             "type": "call_webhook",
             "uuid": "ad154980-7bf7-4ab8-8728-545fd6378912",
             "method": "GET",
-            "url": "@(\"\")"
+            "url": "@(\"\")",
+            "result_name": "My Webhook"
         },
         "events": [
             {
                 "created_on": "2018-10-18T14:20:30.000123456Z",
                 "step_uuid": "59d74b86-3e2f-4a93-aece-b05d2fdcde0c",
-                "text": "call_webhook URL evaluated to empty string, skipping",
+                "text": "webhook URL evaluated to empty string",
                 "type": "error"
+            },
+            {
+                "category": "Skipped",
+                "created_on": "2018-10-18T14:20:30.000123456Z",
+                "input": "GET ",
+                "name": "My Webhook",
+                "step_uuid": "59d74b86-3e2f-4a93-aece-b05d2fdcde0c",
+                "type": "run_result_changed",
+                "value": "0"
             }
         ],
         "inspection": {
@@ -118,7 +128,67 @@
                 "@(\"\")"
             ],
             "dependencies": [],
-            "results": []
+            "results": [
+                {
+                    "categories": [
+                        "Success",
+                        "Skipped",
+                        "Failure"
+                    ],
+                    "key": "my_webhook",
+                    "name": "My Webhook",
+                    "node_uuids": [
+                        "72a1f5df-49f9-45df-94c9-d86f7ea064e5"
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "description": "Error event created and action skipped if URL evaluates to invalid URL",
+        "action": {
+            "type": "call_webhook",
+            "uuid": "ad154980-7bf7-4ab8-8728-545fd6378912",
+            "method": "GET",
+            "url": "@(\":xxxxx\")",
+            "result_name": "My Webhook"
+        },
+        "events": [
+            {
+                "created_on": "2018-10-18T14:20:30.000123456Z",
+                "step_uuid": "59d74b86-3e2f-4a93-aece-b05d2fdcde0c",
+                "text": "webhook URL evaluated to invalid URL",
+                "type": "error"
+            },
+            {
+                "category": "Skipped",
+                "created_on": "2018-10-18T14:20:30.000123456Z",
+                "input": "GET :xxxxx",
+                "name": "My Webhook",
+                "step_uuid": "59d74b86-3e2f-4a93-aece-b05d2fdcde0c",
+                "type": "run_result_changed",
+                "value": "0"
+            }
+        ],
+        "inspection": {
+            "templates": [
+                "@(\":xxxxx\")"
+            ],
+            "dependencies": [],
+            "results": [
+                {
+                    "categories": [
+                        "Success",
+                        "Skipped",
+                        "Failure"
+                    ],
+                    "key": "my_webhook",
+                    "name": "My Webhook",
+                    "node_uuids": [
+                        "72a1f5df-49f9-45df-94c9-d86f7ea064e5"
+                    ]
+                }
+            ]
         }
     },
     {
@@ -182,6 +252,7 @@
                     "name": "My Webhook",
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "node_uuids": [
@@ -246,6 +317,7 @@
                 {
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "key": "my_webhook",
@@ -306,6 +378,7 @@
                 {
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "key": "my_webhook",

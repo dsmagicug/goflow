@@ -245,6 +245,7 @@
                     "name": "My Result",
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "node_uuids": [
@@ -377,6 +378,7 @@
                     "name": "My Result",
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "node_uuids": [
@@ -467,6 +469,7 @@
                     "name": "My Result",
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "node_uuids": [
@@ -582,6 +585,7 @@
                     "name": "My Result",
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "node_uuids": [
@@ -673,6 +677,7 @@
                     "name": "My Result",
                     "categories": [
                         "Success",
+                        "Skipped",
                         "Failure"
                     ],
                     "node_uuids": [

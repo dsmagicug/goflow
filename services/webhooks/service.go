@@ -132,7 +132,7 @@ func (s *service) newCallFromResponse(requestTrace []byte, response *http.Respon
 
 		// if we have no remaining bytes, error because the body was too big
 		if bodyReader.(*io.LimitedReader).N <= 0 {
-			return nil, errors.Errorf("webhook response body exceeds %d bytes limit", maxBodyBytes)
+			return nil, errors.Errorf("response body exceeds %d bytes limit", maxBodyBytes)
 		}
 
 		if len(bodySniffed) > 0 {
