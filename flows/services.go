@@ -40,17 +40,26 @@ const (
 	CallStatusSubscriberGone CallStatus = "subscriber_gone"
 )
 
+type ResponseStatus string
+
+const (
+	ResponseRead            ResponseStatus = "read"
+	ResponseUnsupportedType ResponseStatus = "unsupported_type"
+	ResponseIOError         ResponseStatus = "io_error"
+	ResponseTooLarge        ResponseStatus = "exceeds_limit"
+)
+
 // WebhookCall is the result of a webhook call
 type WebhookCall struct {
-	URL         string
-	Method      string
-	StatusCode  int
-	Status      CallStatus
-	TimeTaken   time.Duration
-	Request     []byte
-	Response    []byte
-	BodyIgnored bool
-	Resthook    string
+	URL            string
+	Method         string
+	StatusCode     int
+	Status         CallStatus
+	TimeTaken      time.Duration
+	Request        []byte
+	Response       []byte
+	ResponseStatus ResponseStatus
+	Resthook       string
 }
 
 // WebhookService provides webhook functionality to the engine

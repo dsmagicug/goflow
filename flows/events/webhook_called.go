@@ -53,6 +53,6 @@ func NewWebhookCalled(webhook *flows.WebhookCall) *WebhookCalledEvent {
 		ElapsedMS:   int(webhook.TimeTaken / time.Millisecond),
 		Resthook:    webhook.Resthook,
 		StatusCode:  webhook.StatusCode,
-		BodyIgnored: webhook.BodyIgnored,
+		BodyIgnored: webhook.ResponseStatus != flows.ResponseRead,
 	}
 }

@@ -12,8 +12,6 @@ import (
 	"github.com/nyaruka/goflow/flows/engine"
 	"github.com/nyaruka/goflow/utils/dates"
 	"github.com/nyaruka/goflow/utils/httpx"
-
-	"github.com/pkg/errors"
 )
 
 // response content-types that we'll fetch
@@ -127,21 +125,24 @@ func (s *service) newCallFromResponse(requestTrace []byte, response *http.Respon
 	if saveBody {
 		bodyBytes, err := ioutil.ReadAll(bodyReader)
 		if err != nil {
-			return nil, err
-		}
+			w.Status = flows.CallStatusConnectionError
+			w.ResponseStatus = flows.ResponseIOError
+		} else {
+			// if we have no remaining bytes, error because the body was too big
+			if bodyReader.(*io.LimitedReader).N <= 0 {
+				w.Status = flows.CallStatusResponseError
+				w.ResponseStatus = flows.ResponseTooLarge
+			} else {
+				w.ResponseStatus = flows.ResponseRead
 
-		// if we have no remaining bytes, error because the body was too big
-		if bodyReader.(*io.LimitedReader).N <= 0 {
-			return nil, errors.Errorf("response body exceeds %d bytes limit", maxBodyBytes)
+				if len(bodySniffed) > 0 {
+					bodyBytes = append(bodySniffed, bodyBytes...)
+				}
+				w.Response = append(w.Response, bodyBytes...)
+			}
 		}
-
-		if len(bodySniffed) > 0 {
-			bodyBytes = append(bodySniffed, bodyBytes...)
-		}
-
-		w.Response = append(w.Response, bodyBytes...)
 	} else {
-		w.BodyIgnored = true
+		w.ResponseStatus = flows.ResponseUnsupportedType
 	}
 
 	return w, nil
