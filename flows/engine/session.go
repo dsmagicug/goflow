@@ -5,6 +5,7 @@ import (
 
 	"github.com/nyaruka/goflow/assets"
 	"github.com/nyaruka/goflow/envs"
+	"github.com/nyaruka/goflow/excellent/tools"
 	"github.com/nyaruka/goflow/excellent/types"
 	"github.com/nyaruka/goflow/flows"
 	"github.com/nyaruka/goflow/flows/events"
@@ -100,13 +101,15 @@ func (s *session) ParentRun() flows.RunSummary {
 func (s *session) Status() flows.SessionStatus { return s.status }
 func (s *session) Wait() flows.ActivatedWait   { return s.wait }
 
-func (s *session) CurrentContext() map[string]types.XValue {
+func (s *session) ExplorableContext() map[string]interface{} {
 	run := s.waitingRun()
 	if run == nil {
 		return nil
 	}
 
-	return run.RootContext(s.env)
+	raw := run.RootContext(s.env)
+
+	return tools.ExplorableContext(types.NewXObject(raw), flows.RunContextDeprecated)
 }
 
 // looks through this session's run for the one that is waiting

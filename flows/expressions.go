@@ -16,9 +16,7 @@ type Contextable interface {
 // Context generates a lazy object for use in expressions
 func Context(env envs.Environment, contextable Contextable) types.XValue {
 	if !utils.IsNil(contextable) {
-		return types.NewXLazyObject(func() map[string]types.XValue {
-			return contextable.Context(env)
-		})
+		return ContextFunc(env, contextable.Context)
 	}
 	return nil
 }
@@ -44,6 +42,14 @@ var RunContextTopLevels = []string{
 	"trigger",
 	"urns",
 	"webhook",
+}
+
+// RunContextDeprecated are the context paths which only exist for backwards compatibility and
+// shouldn't be included in documentation
+var RunContextDeprecated = [][]string{
+	{"legacy_extra"},
+	{"parent", "run"},
+	{"child", "run"},
 }
 
 // ContactQueryEscaping is the escaping function used for expressions in contact queries

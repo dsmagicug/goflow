@@ -65,6 +65,20 @@ func StringSliceContains(slice []string, str string, caseSensitive bool) bool {
 	return false
 }
 
+// StringSliceEquals determines whether the given slices of strings are equal
+func StringSliceEquals(s1, s2 []string) bool {
+	if len(s1) != len(s2) {
+		return false
+	}
+
+	for i := range s1 {
+		if s1[i] != s2[i] {
+			return false
+		}
+	}
+	return true
+}
+
 // StringSetKeys returns the keys of string set in lexical order
 func StringSetKeys(m map[string]bool) []string {
 	vals := make([]string, 0, len(m))

@@ -364,7 +364,8 @@ type Session interface {
 	GetRun(RunUUID) (FlowRun, error)
 	GetCurrentChild(FlowRun) FlowRun
 	ParentRun() RunSummary
-	CurrentContext() map[string]types.XValue
+
+	ExplorableContext() map[string]interface{}
 
 	Engine() Engine
 }

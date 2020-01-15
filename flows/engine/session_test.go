@@ -11,6 +11,7 @@ import (
 	"github.com/nyaruka/goflow/assets"
 	"github.com/nyaruka/goflow/assets/static"
 	"github.com/nyaruka/goflow/envs"
+	"github.com/nyaruka/goflow/excellent/types"
 	"github.com/nyaruka/goflow/flows"
 	"github.com/nyaruka/goflow/flows/engine"
 	"github.com/nyaruka/goflow/flows/events"
@@ -781,7 +782,7 @@ func TestWaitTimeout(t *testing.T) {
 	require.Equal(t, "", result.Input)
 }
 
-func TestCurrentContext(t *testing.T) {
+func TestExplorableContext(t *testing.T) {
 	sessionAssets, err := ioutil.ReadFile("testdata/timeout_test.json")
 	require.NoError(t, err)
 
@@ -800,8 +801,9 @@ func TestCurrentContext(t *testing.T) {
 	session, _, err := eng.NewSession(sa, trigger)
 	assert.Equal(t, string(flows.SessionStatusWaiting), string(session.Status()))
 
-	context := session.CurrentContext()
+	context := session.ExplorableContext()
 	assert.NotNil(t, context)
+	assert.Equal(t, types.NewXText("Joe"), context["contact"].(map[string]interface{})["name"])
 
 	// check we can marshal it
 	_, err = json.Marshal(context)
@@ -812,5 +814,5 @@ func TestCurrentContext(t *testing.T) {
 
 	// can't get context of completed session
 	assert.Equal(t, flows.SessionStatusCompleted, session.Status())
-	assert.Nil(t, session.CurrentContext())
+	assert.Nil(t, session.ExplorableContext())
 }
